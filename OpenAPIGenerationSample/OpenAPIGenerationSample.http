@@ -1,0 +1,6 @@
+@OpenAPIGenerationSample_HostAddress = http://localhost:5230
+
+GET {{OpenAPIGenerationSample_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
