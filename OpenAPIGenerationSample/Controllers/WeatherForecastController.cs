@@ -6,7 +6,7 @@ namespace OpenAPIGenerationSample.Controllers
     /// Information about the weather
     /// </summary>
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
@@ -24,11 +24,28 @@ namespace OpenAPIGenerationSample.Controllers
         /// <summary>
         /// Get the current weather forecast for a fake place
         /// </summary>
-        /// <returns>Forecasted weather for the next 5 days</returns>
-        [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
+        /// <param name="tellMeTheWeatherIsGood">Set to true when the user doesn't want to be presented with any bad news</param>
+        /// <returns>Forecasted weather for one day</returns>
+        [HttpGet("GetTodaysForecast/{tellMeTheWeatherIsGood:bool}")]
+        public IEnumerable<WeatherForecast> Get(bool tellMeTheWeatherIsGood)
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            var result = Get(1);
+            foreach (var item in result)
+            {
+                if (tellMeTheWeatherIsGood)
+                    item.WeatherType = WeatherType.Good;
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Get the current weather forecast for a fake place
+        /// </summary>
+        /// <returns>Forecasted weather for a user-specified amount of days</returns>
+        [HttpGet("GetWeatherForecast/{days:int}")]
+        public IEnumerable<WeatherForecast> Get(int days)
+        {
+            return Enumerable.Range(1, days).Select(index => new WeatherForecast
             {
                 Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
                 TemperatureC = Random.Shared.Next(-20, 55),
