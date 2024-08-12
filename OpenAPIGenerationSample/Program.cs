@@ -1,3 +1,4 @@
+using Microsoft.OpenApi.Models;
 using OpenAPIGenerationSample.SchemaFilters;
 using System.Reflection;
 
@@ -24,6 +25,29 @@ builder.Services.AddSwaggerGen(opt =>
     //https://learn.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-8.0&tabs=visual-studio#xml-comments
     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     opt.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+
+    //From https://stackoverflow.com/a/57872872
+    opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+        Name = "Authorization",
+        Scheme = "Bearer",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+    });
+
+    opt.AddSecurityRequirement(new OpenApiSecurityRequirement {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Id="Bearer",
+                    Type = ReferenceType.SecurityScheme,
+                }
+            }, new List<string>()
+        }
+    });
 });
 
 var app = builder.Build();
