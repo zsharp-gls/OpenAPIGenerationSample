@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace OpenAPIGenerationSample.Controllers
 {
+    /// <summary>
+    /// Information about the weather
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
@@ -18,6 +21,10 @@ namespace OpenAPIGenerationSample.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Get the current weather forecast for a fake place
+        /// </summary>
+        /// <returns>Forecasted weather for the next 5 days</returns>
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
