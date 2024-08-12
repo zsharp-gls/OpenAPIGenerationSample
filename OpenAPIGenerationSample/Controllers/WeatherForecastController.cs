@@ -26,10 +26,10 @@ namespace OpenAPIGenerationSample.Controllers
         /// </summary>
         /// <param name="tellMeTheWeatherIsGood">Set to true when the user doesn't want to be presented with any bad news</param>
         /// <returns>Forecasted weather for one day</returns>
-        [HttpGet("GetTodaysForecast/{tellMeTheWeatherIsGood:bool}", Name = "GetTodaysForecast")]
-        public IEnumerable<WeatherForecast> Get(bool tellMeTheWeatherIsGood)
+        [HttpGet("[action]/{tellMeTheWeatherIsGood:bool}")]
+        public IEnumerable<WeatherForecast> GetTodaysForecast(bool tellMeTheWeatherIsGood)
         {
-            var result = Get(1);
+            var result = GetWeatherForecast(1);
             foreach (var item in result)
             {
                 if (tellMeTheWeatherIsGood)
@@ -42,8 +42,8 @@ namespace OpenAPIGenerationSample.Controllers
         /// Get the current weather forecast for a fake place
         /// </summary>
         /// <returns>Forecasted weather for a user-specified amount of days</returns>
-        [HttpGet("GetWeatherForecast/{days:int}")]
-        public IEnumerable<WeatherForecast> Get(int days)
+        [HttpGet("[action]/{days:int}")]
+        public IEnumerable<WeatherForecast> GetWeatherForecast(int days)
         {
             return Enumerable.Range(1, days).Select(index => new WeatherForecast
             {

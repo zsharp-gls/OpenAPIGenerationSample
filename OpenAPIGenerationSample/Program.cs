@@ -17,6 +17,8 @@ builder.Services.AddSwaggerGen(opt =>
         Description = "A demo of linking front and back end services with OpenAPI"
     });
 
+    opt.CustomOperationIds(e => $"{e.ActionDescriptor.RouteValues["action"]}_{e.HttpMethod}");
+
     opt.SchemaFilter<EnumSchemaFilter>();
 
     //https://learn.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-8.0&tabs=visual-studio#xml-comments
