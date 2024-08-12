@@ -26,7 +26,7 @@ namespace OpenAPIGenerationSample.Controllers
         /// </summary>
         /// <param name="tellMeTheWeatherIsGood">Set to true when the user doesn't want to be presented with any bad news</param>
         /// <returns>Forecasted weather for one day</returns>
-        [HttpGet("GetTodaysForecast/{tellMeTheWeatherIsGood:bool}")]
+        [HttpGet("GetTodaysForecast/{tellMeTheWeatherIsGood:bool}", Name = "GetTodaysForecast")]
         public IEnumerable<WeatherForecast> Get(bool tellMeTheWeatherIsGood)
         {
             var result = Get(1);
