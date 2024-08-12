@@ -15,5 +15,7 @@ namespace OpenAPIGenerationSample
         /// A one-word description of the weather
         /// </summary>
         public string? Summary { get; set; }
+
+        public WeatherType WeatherType { get; set; }
     }
 }
